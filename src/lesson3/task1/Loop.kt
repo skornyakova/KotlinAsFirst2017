@@ -252,7 +252,7 @@ fun squareSequenceDigit(n: Int): Int {
             a *= 10
             sumOfDigits++
         }
-        numbersCounter = numbersCounter + sumOfDigits // подсчитываю кол-во цифр в послед-ти
+        numbersCounter = numbersCounter + sumOfDigits // подсчитываю кол-во цифр в последовательности
     }
     numbersCounter = numbersCounter - sumOfDigits // возвращаюсь на одно число назад
     a = a / 10
