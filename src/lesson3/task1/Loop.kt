@@ -107,14 +107,17 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    val numberM = m
-    val numberN = n
+    var numM = m
+    var numN = n
     val product = m * n
-    while (numberM != numberN) {
-        if (numberM > numberN) (numberM == numberN - numberM)
-        else (numberN == numberN - numberM)
+    while (numM != numN) {
+        if (numM > numN) {
+            numM -= numN
+        } else {
+            numN -= numM
+        }
     }
-    return product / numberM
+    return product / numM
 }
 
 /**
@@ -196,7 +199,7 @@ fun revert(n: Int): Int {
     var b = 0
     while (a > 0) {
         b = b * 10 + (a % 10)
-        a = a / 10
+        a /= 10
     }
     return b
 }
@@ -213,7 +216,7 @@ fun isPalindrome(n: Int): Boolean {
     var b = 0
     while (a > 0) {
         b = b * 10 + (a % 10)
-        a = a / 10
+        a /= 10
     }
     if (b == n) (return true)
     else (return false)
@@ -227,7 +230,6 @@ fun isPalindrome(n: Int): Boolean {
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
 fun hasDifferentDigits(n: Int): Boolean = TODO()
-
 
 /**
  * Сложная
@@ -252,13 +254,13 @@ fun squareSequenceDigit(n: Int): Int {
             a *= 10
             sumOfDigits++
         }
-        numbersCounter = numbersCounter + sumOfDigits // подсчитываю кол-во цифр в последовательности
+        numbersCounter += sumOfDigits // подсчитываю кол-во цифр в последовательности
     }
-    numbersCounter = numbersCounter - sumOfDigits // возвращаюсь на одно число назад
-    a = a / 10
+    numbersCounter -= sumOfDigits // возвращаюсь на одно число назад
+    a /= 10
     while (numbersCounter != n) {
         requiredNumber = sqrNum / a % 10
-        a = a / 10
+        a /= 10
         numbersCounter++
     }
     return requiredNumber
@@ -271,4 +273,30 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var numbersCounter = 0
+    var i = 0
+    var num = 0
+    var sumOfDigits = 0
+    var a = 0
+    var requiredNumber = 0
+    while (numbersCounter < n) {
+        i++
+        num = fib(i)
+        sumOfDigits = 1
+        a = 10
+        while (num / a != 0) {
+            a *= 10
+            sumOfDigits++
+        }
+        numbersCounter += sumOfDigits
+    }
+    numbersCounter -= sumOfDigits
+    a /= 10
+    while (numbersCounter != n) {
+        requiredNumber = num / a % 10
+        a /= 10
+        numbersCounter++
+    }
+    return requiredNumber
+}
