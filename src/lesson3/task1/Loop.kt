@@ -86,17 +86,14 @@ fun fib(n: Int): Int {
     var fibN = 0
     var fib1 = 1
     var fib2 = 1
-    return when {
-        n == 1 -> 1
-        n == 2 -> 1
-        else -> {
-            for (i in 3..n) {
-                fibN = fib2 + fib1
-                fib1 = fib2
-                fib2 = fibN
-            }
-            return fibN
+    return if (n == 1 || n == 2) 1
+    else {
+        for (i in 3..n) {
+            fibN = fib2 + fib1
+            fib1 = fib2
+            fib2 = fibN
         }
+        return fibN
     }
 }
 
@@ -154,11 +151,16 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    val minNumber = min(m, n)
-    for (i in 2..minNumber) {
-        if (n % i == 0 && m % i == 0) (return false)
+    var numM = m
+    var numN = n
+    while (numM != numN) {
+        if (numM > numN) {
+            numM -= numN
+        } else {
+            numN -= numM
+        }
     }
-    return true
+    return numM == 1
 }
 
 /**
@@ -227,14 +229,8 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    var a = n
-    var b = 0
-    while (a > 0) {
-        b = b * 10 + (a % 10)
-        a /= 10
-    }
-    if (b == n) (return true)
-    else (return false)
+    val b = revert(n)
+    return b == n
 }
 
 
