@@ -260,27 +260,22 @@ fun squareSequenceDigit(n: Int): Int {
     var i = 0
     var sqrNum = 0
     var sumOfDigits = 0
-    var a = 0
     var requiredNumber = 0
     while (numbersCounter < n) { //задаю последовательность квадратов
         i += 1
         sqrNum = i * i
-        sumOfDigits = 1
-        a = 10
-        while (sqrNum / a != 0) { //считаю количество цифр в числе
-            a *= 10
-            sumOfDigits++
+        sumOfDigits = digitNumber(sqrNum)
+        numbersCounter += sumOfDigits
+    }
+    return if (numbersCounter == n) (sqrNum%10)
+    else {
+        numbersCounter -= sumOfDigits // возвращаюсь на одно число назад
+        while (numbersCounter != n) {
+            requiredNumber = sqrNum/10%10
+            numbersCounter++
         }
-        numbersCounter += sumOfDigits // подсчитываю кол-во цифр в последовательности
+        return requiredNumber
     }
-    numbersCounter -= sumOfDigits // возвращаюсь на одно число назад
-    a /= 10
-    while (numbersCounter != n) {
-        requiredNumber = sqrNum / a % 10
-        a /= 10
-        numbersCounter++
-    }
-    return requiredNumber
 }
 
 /**

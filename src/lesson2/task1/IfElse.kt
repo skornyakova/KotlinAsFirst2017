@@ -79,15 +79,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    val rook1TreatensX = kingX == rookX1
-    val rook1TreatensY = kingY == rookY1
-    val rook2TreatensX = kingX == rookX2
-    val rook2TreatensY = kingY == rookY2
+    val rook1Treatens = kingX == rookX1 || kingY == rookY1
+    val rook2Treatens = kingX == rookX2 || kingY == rookY2
     return when {
-        (rook1TreatensX) && (rook2TreatensX || rook2TreatensY) ||
-                (rook1TreatensY) && (rook2TreatensX || rook2TreatensY) -> 3
-        rook1TreatensX || rook1TreatensY -> 1
-        rook2TreatensX || rook2TreatensY -> 2
+        rook1Treatens && rook2Treatens  -> 3
+        rook1Treatens -> 1
+        rook2Treatens -> 2
         else -> 0
     }
 }
@@ -105,15 +102,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val rookTreatensX = kingX == rookX
-    val rookTreatensY = kingY == rookY
-    val bishopTreatensX = abs(bishopX - kingX)
-    val bishopTreatensY = abs(bishopY - kingY)
+    val bishopTreatens = abs(bishopX - kingX) == abs(bishopY - kingY)
+    val rookTreatens = kingX == rookX || kingY == rookY
     return when {
-        rookTreatensX && bishopTreatensX == bishopTreatensY ||
-                rookTreatensY && bishopTreatensX == bishopTreatensY -> 3
-        rookTreatensX || rookTreatensY -> 1
-        bishopTreatensX == bishopTreatensY -> 2
+        rookTreatens && bishopTreatens  -> 3
+        rookTreatens -> 1
+        bishopTreatens -> 2
         else -> 0
     }
 }
@@ -127,7 +121,8 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if (a + b > c && a + c > b && b + c > a) {
+    return if (a + b < c || a + c < b || b + c < a) -1
+    else {
         val sumOfSides = a + b + c
         val maxSide = max(a, max(b, c))
         val minSide = min(a, min(b, c))
@@ -137,7 +132,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
             sqr(maxSide) == sqr(minSide) + sqr(thirdSide) -> 1
             else -> 2
         }
-    } else return -1
+    }
 }
 
 /**
