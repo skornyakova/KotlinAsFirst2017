@@ -255,28 +255,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int {
-    var numbersCounter = 0
-    var i = 0
-    var sqrNum = 0
-    var sumOfDigits = 0
-    var requiredNumber = 0
-    while (numbersCounter < n) { //задаю последовательность квадратов
-        i += 1
-        sqrNum = i * i
-        sumOfDigits = digitNumber(sqrNum)
-        numbersCounter += sumOfDigits
-    }
-    return if (numbersCounter == n) (sqrNum%10)
-    else {
-        numbersCounter -= sumOfDigits // возвращаюсь на одно число назад
-        while (numbersCounter != n) {
-            requiredNumber = sqrNum/10%10
-            numbersCounter++
-        }
-        return requiredNumber
-    }
-}
+fun squareSequenceDigit(n: Int): Int = TODO()
 
 /**
  * Сложная
@@ -285,30 +264,4 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int {
-    var numbersCounter = 0
-    var i = 0
-    var num = 0
-    var sumOfDigits = 0
-    var a = 0
-    var requiredNumber = 0
-    while (numbersCounter < n) {
-        i++
-        num = fib(i)
-        sumOfDigits = 1
-        a = 10
-        while (num / a != 0) {
-            a *= 10
-            sumOfDigits++
-        }
-        numbersCounter += sumOfDigits
-    }
-    numbersCounter -= sumOfDigits
-    a /= 10
-    while (numbersCounter != n) {
-        requiredNumber = num / a % 10
-        a /= 10
-        numbersCounter++
-    }
-    return requiredNumber
-}
+fun fibSequenceDigit(n: Int): Int = TODO()
