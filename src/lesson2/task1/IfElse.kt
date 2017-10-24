@@ -82,7 +82,7 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     val rook1Treatens = kingX == rookX1 || kingY == rookY1
     val rook2Treatens = kingX == rookX2 || kingY == rookY2
     return when {
-        rook1Treatens && rook2Treatens  -> 3
+        rook1Treatens && rook2Treatens -> 3
         rook1Treatens -> 1
         rook2Treatens -> 2
         else -> 0
@@ -105,7 +105,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
     val bishopTreatens = abs(bishopX - kingX) == abs(bishopY - kingY)
     val rookTreatens = kingX == rookX || kingY == rookY
     return when {
-        rookTreatens && bishopTreatens  -> 3
+        rookTreatens && bishopTreatens -> 3
         rookTreatens -> 1
         bishopTreatens -> 2
         else -> 0
@@ -130,7 +130,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         sqr(maxSide) < sqr(minSide) + sqr(thirdSide) -> 0
         sqr(maxSide) == sqr(minSide) + sqr(thirdSide) -> 1
         else -> 2
-        }
+    }
 }
 
 /**
