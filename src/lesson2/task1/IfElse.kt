@@ -121,20 +121,16 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return if (a + b < c || a + c < b || b + c < a) {
-        -1
-    }
-    else {
-        val sumOfSides = a + b + c
-        val maxSide = max(a, max(b, c))
-        val minSide = min(a, min(b, c))
-        val thirdSide = sumOfSides - maxSide - minSide
-        return when {
-            sqr(maxSide) < sqr(minSide) + sqr(thirdSide) -> 0
-            sqr(maxSide) == sqr(minSide) + sqr(thirdSide) -> 1
-            else -> 2
+    if (a + b < c || a + c < b || b + c < a) return (-1)
+    val sumOfSides = a + b + c
+    val maxSide = max(a, max(b, c))
+    val minSide = min(a, min(b, c))
+    val thirdSide = sumOfSides - maxSide - minSide
+    return when {
+        sqr(maxSide) < sqr(minSide) + sqr(thirdSide) -> 0
+        sqr(maxSide) == sqr(minSide) + sqr(thirdSide) -> 1
+        else -> 2
         }
-    }
 }
 
 /**
