@@ -86,15 +86,13 @@ fun fib(n: Int): Int {
     var fibN = 0
     var fib1 = 1
     var fib2 = 1
-    return if (n == 1 || n == 2) 1
-    else {
-        for (i in 3..n) {
-            fibN = fib2 + fib1
-            fib1 = fib2
-            fib2 = fibN
-        }
-        return fibN
+    if (n == 1 || n == 2) return 1
+    for (i in 3..n) {
+        fibN = fib2 + fib1
+        fib1 = fib2
+        fib2 = fibN
     }
+    return fibN
 }
 
 /**
@@ -103,19 +101,7 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var numM = m
-    var numN = n
-    val product = m * n
-    while (numM != numN) {
-        if (numM > numN) {
-            numM -= numN
-        } else {
-            numN -= numM
-        }
-    }
-    return product / numM
-}
+fun lcm(m: Int, n: Int): Int = m * n / greatestCommonDevisor(m, n)
 
 /**
  * Простая
@@ -150,18 +136,8 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var numM = m
-    var numN = n
-    while (numM != numN) {
-        if (numM > numN) {
-            numM -= numN
-        } else {
-            numN -= numM
-        }
-    }
-    return numM == 1
-}
+fun isCoPrime(m: Int, n: Int): Boolean = greatestCommonDevisor(m, n) == 1
+
 
 /**
  * Простая
@@ -179,22 +155,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double {
-    var sequence = 1
-    var a = x
-    var b = x
-    var c = x
-    while (2 * PI < c) {
-        c -= 2 * PI
-    }
-    while (true) {
-        if (abs(a) < eps)
-            return b
-        sequence += 2
-        a = -a * pow(c, 2.0) / sequence / (sequence - 1)
-        b += a
-    }
-}
+fun sin(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя
@@ -228,10 +189,7 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean {
-    val b = revert(n)
-    return b == n
-}
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 
 /**
@@ -265,3 +223,16 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
+
+fun greatestCommonDevisor(m: Int, n: Int): Int {
+    var numM = m
+    var numN = n
+    while (numM != numN) {
+        if (numM > numN) {
+            numM -= numN
+        } else {
+            numN -= numM
+        }
+    }
+    return numM
+}
