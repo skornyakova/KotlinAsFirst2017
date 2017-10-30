@@ -202,12 +202,13 @@ fun factorize(n: Int): List<Int> {
     val List = mutableListOf<Int>()
     var i = 2
     var nCopy = n
-    while (i <= nCopy && nCopy > 0) {
-        while (nCopy % i == 0) {
+    while (i <= nCopy) {
+        if (nCopy % i == 0) {
             List.add(i)
             nCopy /= i
+        } else {
+            i++
         }
-        i++
     }
     return List.sorted()
 }
@@ -296,7 +297,22 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var nCopy = n
+    var result = ""
+    var i = 0
+    val digits = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val romanDigits = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    while (nCopy > 0) {
+        if (digits[i] <= nCopy) {
+            result += romanDigits[i]
+            nCopy -= digits[i]
+        } else {
+            i++
+        }
+    }
+    return result
+}
 
 /**
  * Очень сложная

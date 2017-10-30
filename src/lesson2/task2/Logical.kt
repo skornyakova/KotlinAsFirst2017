@@ -59,8 +59,8 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val bricksSides = listOf(a, b, c).sorted()
+    val (min, mid, max) = listOf(a, b, c).sorted()
     val rectangleSides = listOf(r, s).sorted()
-    return (bricksSides.first() <= rectangleSides.first()
-            && bricksSides[1] <= rectangleSides.last())
+    return (min <= rectangleSides.first()
+            && mid <= rectangleSides.last())
 }
