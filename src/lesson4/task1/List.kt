@@ -110,8 +110,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var sum = 0.0
-    for (i in 0 until v.size) {
-        sum += v[i] * v[i]
+    for (element in v) {
+        sum += element * element
     }
     return sqrt(sum)
 }
@@ -151,11 +151,11 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double {
-    var C = 0.0
+    var c = 0.0
     for (i in 0 until a.size) {
-        C += a[i] * b[i]
+        c += a[i] * b[i]
     }
-    return C
+    return c
 }
 
 /**
@@ -199,18 +199,18 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    val List = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var i = 2
     var nCopy = n
     while (i <= nCopy) {
         if (nCopy % i == 0) {
-            List.add(i)
+            list.add(i)
             nCopy /= i
         } else {
             i++
         }
     }
-    return List.sorted()
+    return list.sorted()
 }
 
 /**
@@ -253,11 +253,9 @@ fun convertToString(n: Int, base: Int): String {
     if (n == 0) return "0"
     val result = mutableListOf<String>()
     var nCopy = n
-    val chars = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-            "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
     while (nCopy > 0) {
         if (nCopy % base > 9)
-            result.add(0, chars[nCopy % base - 10])
+            result.add(0, (nCopy % base + 87).toChar().toString())
         else
             result.add(0, (nCopy % base).toString())
         nCopy /= base
@@ -275,7 +273,7 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
     val reversedDigits = digits.reversed()
-    for (i in 0 until digits.size) {
+    for (i in 0 until reversedDigits.size) {
         result += reversedDigits[i] * pow(base.toDouble(), i.toDouble()).toInt()
     }
     return result
