@@ -213,7 +213,20 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var i = 0
+    var sumOfDigits = 0
+    var sqrNum = 0
+    while (n > sumOfDigits) {
+        i++
+        sqrNum = i * i
+        sumOfDigits += digitNumber(sqrNum)
+    }
+    for (i in n until sumOfDigits) {
+        sqrNum /= 10
+    }
+    return sqrNum % 10
+}
 
 /**
  * Сложная
@@ -222,7 +235,19 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var i = 0
+    var sumOfDigits = 0
+    while (n > sumOfDigits) {
+        i++
+        sumOfDigits += digitNumber(fib(i))
+    }
+    var fibNum = fib(i)
+    for (i in n until sumOfDigits) {
+        fibNum /= 10
+    }
+    return fibNum % 10
+}
 
 fun greatestCommonDevisor(m: Int, n: Int): Int {
     var numM = m

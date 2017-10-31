@@ -303,7 +303,8 @@ fun roman(n: Int): String {
     var result = ""
     var i = 0
     val digits = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-    val romanDigits = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val romanDigits = listOf("M", "CM", "D", "CD", "C", "XC", "L",
+            "XL", "X", "IX", "V", "IV", "I")
     while (nCopy > 0) {
         if (digits[i] <= nCopy) {
             result += romanDigits[i]
