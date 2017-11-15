@@ -254,10 +254,11 @@ fun convertToString(n: Int, base: Int): String {
     val result = mutableListOf<String>()
     var nCopy = n
     while (nCopy > 0) {
-        if (nCopy % base > 9)
-            result.add(0, (nCopy % base + 87).toChar().toString())
+        var rest = nCopy % base
+        if (rest > 9)
+            result.add(0, (rest + 87).toChar().toString())
         else
-            result.add(0, (nCopy % base).toString())
+            result.add(0, (rest).toString())
         nCopy /= base
     }
     return result.joinToString(separator = "")
@@ -273,8 +274,10 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
     val reversedDigits = digits.reversed()
+    var power = 1
     for (i in 0 until reversedDigits.size) {
-        result += reversedDigits[i] * pow(base.toDouble(), i.toDouble()).toInt()
+        result += reversedDigits[i] * power
+        power *= base
     }
     return result
 }
