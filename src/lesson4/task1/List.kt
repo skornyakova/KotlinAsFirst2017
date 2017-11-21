@@ -251,14 +251,14 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     if (n == 0) return "0"
-    val result = mutableListOf<String>()
+    val result = mutableListOf<Char>()
     var nCopy = n
     while (nCopy > 0) {
         var rest = nCopy % base
         if (rest > 9)
-            result.add(0, (rest + 87).toChar().toString())
+            result.add(0, 'a' + rest - 10) //исправлено
         else
-            result.add(0, (rest).toString())
+            result.add(0, '0' + rest)
         nCopy /= base
     }
     return result.joinToString(separator = "")
