@@ -144,7 +144,7 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    var maxJump = 0
+    var maxJump = -1
     val parts = jumps.split(" ")
     if (parts.size <= 1) return -1
     try {
