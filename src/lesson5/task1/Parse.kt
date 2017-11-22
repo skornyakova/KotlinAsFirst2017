@@ -70,13 +70,13 @@ fun main(args: Array<String>) {
 
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    try {
-        return if ((parts.size == 3) && (parts[1] in months)) {
+    return try {
+        if ((parts.size == 3) && (parts[1] in months)) {
             val month = months.indexOf(parts[1])
             String.format("%02d.%02d.%d", parts[0].toInt(), month, parts[2].toInt())
         } else ""
     } catch (e: NumberFormatException) {
-        return ""
+        ""
     }
 }
 
@@ -90,13 +90,13 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    try {
-        return if (parts.size == 3 && parts[1].toInt() in (1..12)) {
+    return try {
+        if (parts.size == 3 && parts[1].toInt() in (1..12)) {
             val month = months[parts[1].toInt()]
             String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
         } else ""
     } catch (e: NumberFormatException) {
-        return ""
+        ""
     }
 }
 
@@ -113,7 +113,7 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val phoneNumber = Regex("""\+|\(|\)|-|\s""").replace(phone,"")
+    val phoneNumber = Regex("""\+|\(|\)|-|\s""").replace(phone, "")
     return when {
         phoneNumber.contains(Regex("""\D""")) -> ""
         phone.contains(Regex("""\+.""")) -> "+" + phoneNumber
@@ -143,7 +143,21 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var maxJump = 0
+    val parts = jumps.split(" ")
+    if (parts.size <= 1) return -1
+    try {
+        for (i in 0 until parts.size step 2) {
+            if ("+" in parts[i + 1]) {
+                if (parts[i].toInt() >= maxJump) maxJump = parts[i].toInt()
+            }
+        }
+    } catch (e: NumberFormatException) {
+        return -1
+    }
+    return maxJump
+}
 
 /**
  * Сложная
@@ -178,7 +192,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val parts = description.split(";")
+    var maxPrice = 0.0
+    var mostExpThing = ""
+    if (description == "") return ""
+    try {
+        for (element in parts) {
+            val digitPart = element.trim().split(" ")
+            val price = digitPart[1].toDouble()
+            if (price > maxPrice) {
+                maxPrice = price
+                mostExpThing = digitPart[0]
+            }
+        }
+    } catch (e: NumberFormatException) {
+        mostExpThing = ""
+    }
+    return mostExpThing
+}
 
 /**
  * Сложная
