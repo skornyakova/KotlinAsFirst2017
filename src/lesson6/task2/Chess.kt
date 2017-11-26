@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson6.task2
 
 /**
@@ -21,7 +22,13 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String {
+        if (inside()) {
+            val columnStr = ('a'..'h').toList()
+            return String.format("%c%s", columnStr[column - 1], row.toString())
+        }
+        return ""
+    }
 }
 
 /**
@@ -56,7 +63,19 @@ fun square(notation: String): Square = TODO()
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+fun rookMoveNumber(start: Square, end: Square): Int {
+    if (start.inside() && end.inside()) {
+        if (start == end) {
+            return 0
+        }
+        when {
+            start.column == end.column -> return 1
+            start.row == end.row -> return 1
+        }
+        return 2
+    }
+    throw IllegalArgumentException()
+}
 
 /**
  * Средняя

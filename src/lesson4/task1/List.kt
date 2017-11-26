@@ -168,8 +168,13 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var value = 0.0
-    for (i in 0 until p.size) {
-        value += p[i] * pow(x, i.toDouble())
+    var power = 1.0
+    if (p.isNotEmpty()) {
+        value = p[0]
+        for (i in 1 until p.size) {
+            power *= x
+            value += p[i] * power
+        }
     }
     return value
 }
@@ -256,7 +261,7 @@ fun convertToString(n: Int, base: Int): String {
     while (nCopy > 0) {
         var rest = nCopy % base
         if (rest > 9)
-            result.add(0, 'a' + rest - 10) //исправлено
+            result.add(0, 'a' + rest - 10)
         else
             result.add(0, '0' + rest)
         nCopy /= base

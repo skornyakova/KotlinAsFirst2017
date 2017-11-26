@@ -194,7 +194,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String {
     val parts = description.split(";")
-    var maxPrice = 0.0
+    var maxPrice = -1.0
     var mostExpThing = ""
     if (description == "") return ""
     try {
