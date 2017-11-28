@@ -70,11 +70,10 @@ fun main(args: Array<String>) {
 
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
+    if (parts.size != 3) return ""
+    val month = if (parts[1] in months) (months.indexOf(parts[1])) else return ""
     return try {
-        if ((parts.size == 3) && (parts[1] in months)) {
-            val month = months.indexOf(parts[1])
-            String.format("%02d.%02d.%d", parts[0].toInt(), month, parts[2].toInt())
-        } else ""
+        String.format("%02d.%02d.%d", parts[0].toInt(), month, parts[2].toInt())
     } catch (e: NumberFormatException) {
         ""
     }
@@ -90,11 +89,10 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
+    if (parts.size != 3) return ""
     return try {
-        if (parts.size == 3 && parts[1].toInt() in (1..12)) {
-            val month = months[parts[1].toInt()]
-            String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
-        } else ""
+        val month = if (parts[1].toInt() in (1..12)) (months[parts[1].toInt()]) else return ""
+        String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
     } catch (e: NumberFormatException) {
         ""
     }
@@ -146,11 +144,10 @@ fun bestLongJump(jumps: String): Int = TODO()
 fun bestHighJump(jumps: String): Int {
     var maxJump = -1
     val parts = jumps.split(" ")
-    if (parts.size <= 1) return -1
     try {
-        for (i in 0 until parts.size step 2) {
-            if ("+" in parts[i + 1]) {
-                if (parts[i].toInt() >= maxJump) maxJump = parts[i].toInt()
+        for (i in 1 until parts.size step 2) {
+            if ("+" in parts[i]) {
+                if (parts[i - 1].toInt() >= maxJump) maxJump = parts[i - 1].toInt()
             }
         }
     } catch (e: NumberFormatException) {
@@ -193,7 +190,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть положительными
  */
 fun mostExpensive(description: String): String {
-    var parts = description.split("; ", " ")
+    val parts = description.split("; ", " ")
     var max = 1
     return try {
         for (part in 1..parts.size step 2) {
