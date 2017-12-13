@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
+import java.lang.Math.*
 
 /**
  * Точка на плоскости
@@ -151,21 +152,36 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = TODO()
+fun lineBySegment(s: Segment): Line {
+    var angle = atan2(s.end.y - s.begin.y, s.end.x - s.begin.x)
+    when {
+        angle >= PI -> angle -= PI
+        angle < 0 -> angle += PI
+        else -> IllegalArgumentException()
+    }
+    return Line(s.begin, angle)
+}
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
+fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 
 /**
  * Сложная
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
+fun bisectorByPoints(a: Point, b: Point): Line {
+    val line = lineByPoints(a, b)
+    var thisAngle = line.angle
+    val middlePoint = Point((a.x + b.x) / 2.0, (a.y + b.y) / 2.0)
+    if (line.angle >= PI /2) thisAngle -= PI / 2
+    else thisAngle += PI/ 2
+    return Line(middlePoint, thisAngle)
+}
 
 /**
  * Средняя
