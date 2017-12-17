@@ -70,7 +70,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
-    exeption(start, end)
+    checkException(start, end)
     return when {
         start == end -> 0
         start.column == end.column || start.row == end.row -> 1
@@ -122,7 +122,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> =
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
-    exeption(start, end)
+    checkException(start, end)
     return when {
         start == end -> 0
         (start.column + start.row) % 2 != (end.column + end.row) % 2 -> -1
@@ -172,7 +172,7 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int {
-    exeption(start, end)
+    checkException(start, end)
     return max(abs(start.column - end.column), abs(start.row - end.row))
 }
 
@@ -239,6 +239,6 @@ fun knightMoveNumber(start: Square, end: Square): Int = TODO()
  */
 fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()
 
-fun exeption(start: Square, end: Square){
+fun checkException(start: Square, end: Square){
     if (!start.inside() || !end.inside()) throw IllegalArgumentException()
 }
