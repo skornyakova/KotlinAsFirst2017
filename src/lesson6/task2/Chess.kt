@@ -40,7 +40,7 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
-    if ((notation[0] !in 'a'..'h') || (notation[1] !in '1'..'8') || (notation.length != 2)) {
+    if (notation.length != 2 || notation[0] !in 'a'..'h' || notation[1] !in '1'..'8') {
         throw IllegalArgumentException()
     }
     return Square(notation[0] - 'a' + 1, notation[1].toInt() - '0'.toInt())
@@ -69,14 +69,14 @@ fun square(notation: String): Square {
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int =
-        when {
-            !start.inside() || !end.inside() -> throw IllegalArgumentException()
-            start == end -> 0
-            start.column == end.column || start.row == end.row -> 1
-            else -> 2
-        }
-
+fun rookMoveNumber(start: Square, end: Square): Int {
+    exeption(start, end)
+    return when {
+        start == end -> 0
+        start.column == end.column || start.row == end.row -> 1
+        else -> 2
+    }
+}
 /**
  * Средняя
  *
@@ -122,11 +122,11 @@ fun rookTrajectory(start: Square, end: Square): List<Square> =
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
-    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    exeption(start, end)
     return when {
         start == end -> 0
         start.column + start.row % 2 != end.column + end.row % 2 -> -1
-        abs(start.column + start.row) == abs(end.column + end.row) -> 1
+        abs(start.column - end.column) == abs(start.row - end.row) -> 1
         else -> 2
     }
 }
@@ -172,7 +172,7 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int {
-    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    exeption(start, end)
     return max(abs(start.column - end.column), abs(start.row - end.row))
 }
 
@@ -238,3 +238,7 @@ fun knightMoveNumber(start: Square, end: Square): Int = TODO()
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()
+
+fun exeption(start: Square, end: Square){
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+}
