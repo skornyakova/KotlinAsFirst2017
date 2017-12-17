@@ -125,7 +125,7 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
     exeption(start, end)
     return when {
         start == end -> 0
-        start.column + start.row % 2 != end.column + end.row % 2 -> -1
+        (start.column + start.row) % 2 != (end.column + end.row) % 2 -> -1
         abs(start.column - end.column) == abs(start.row - end.row) -> 1
         else -> 2
     }
