@@ -77,7 +77,15 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val secondMatrix = createMatrix(height, width, 0)
+    for (i in 0 until height) {
+        for (j in 0 until width) {
+            secondMatrix[i, j] = minOf(minOf(i + 1, j + 1, height - i), width - j)
+        }
+    }
+    return secondMatrix
+}
 
 /**
  * Сложная
@@ -204,7 +212,18 @@ data class Holes(val rows: List<Int>, val columns: List<Int>)
  *
  * К примеру, центральный элемент 12 = 1 + 2 + 4 + 5, элемент в левом нижнем углу 12 = 1 + 4 + 7 и так далее.
  */
-fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> = TODO()
+fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> {
+    val secondMatrix = createMatrix(matrix.height, matrix.width, 0)
+    for (i in 0 until matrix.height)
+        for (j in 0 until matrix.width) {
+            var sum = 0
+            for (k in 0..i)
+                for (l in 0..j)
+                    sum += matrix[k, l]
+            secondMatrix[i, j] = sum
+        }
+    return secondMatrix
+}
 
 /**
  * Сложная
@@ -234,7 +253,14 @@ fun canOpenLock(key: Matrix<Int>, lock: Matrix<Int>): Triple<Boolean, Int, Int> 
  * Инвертировать заданную матрицу.
  * При инвертировании знак каждого элемента матрицы следует заменить на обратный
  */
-operator fun Matrix<Int>.unaryMinus(): Matrix<Int> = TODO(this.toString())
+operator fun Matrix<Int>.unaryMinus(): Matrix<Int> {
+    for (i in 0 until this.height) {
+        for (j in 0 until this.width) {
+            this[i, j] = -this[i, j]
+        }
+    }
+    return this
+}
 
 /**
  * Средняя
