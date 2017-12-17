@@ -1,7 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson7.task2
 
 import lesson7.task1.Matrix
+import lesson7.task1.MatrixImpl
 import lesson7.task1.createMatrix
 
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
@@ -103,7 +105,16 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height != matrix.width) throw IllegalArgumentException()
+    val secondMatrix = createMatrix(matrix.height, matrix.width, matrix[0, 0])
+    for (i in 0 until matrix.height) {
+        for (j in 0 until matrix.width) {
+            secondMatrix[i, j] = matrix[matrix.height - (j + 1), i]
+        }
+    }
+    return secondMatrix
+}
 
 /**
  * Сложная
@@ -137,7 +148,25 @@ fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
  *
  * 42 ===> 0
  */
-fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> = TODO()
+fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> {
+    if (matrix.height == 1 && matrix.width == 1) return MatrixImpl(1, 1, 0)
+    val secondMatrix = createMatrix(matrix.height + 2, matrix.width + 2, 0)
+    for (i in 0 until matrix.height) {
+        for (j in 0 until matrix.width) {
+            secondMatrix[i + 1, j + 1] = matrix[i, j]
+        }
+    }
+    for (i in 1..matrix.height) {
+        for (j in 1..matrix.width) {
+            val sum = secondMatrix[i - 1, j] + secondMatrix[i + 1, j] +
+                    secondMatrix[i, j - 1] + secondMatrix[i, j + 1] +
+                    secondMatrix[i - 1, j - 1] + secondMatrix[i + 1, j + 1] +
+                    secondMatrix[i - 1, j + 1] + secondMatrix[i + 1, j - 1]
+            matrix[i - 1, j - 1] = sum
+        }
+    }
+    return matrix
+}
 
 /**
  * Средняя
